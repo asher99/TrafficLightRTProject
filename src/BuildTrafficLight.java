@@ -1,4 +1,6 @@
+import javax.jws.WebParam;
 import javax.swing.JRadioButton;
+import java.util.ArrayList;
 
 /*
  * Created on Mimuna 5767  upDate on Addar 5772 
@@ -9,6 +11,10 @@ import javax.swing.JRadioButton;
  */
 public class BuildTrafficLight
 {
+	enum Modes {SHABBOS,WEEKDAY}
+	enum Phase {INIT,PHASE_A,PHASE_B,PHASE_C}
+
+
 
 	public static void main(String[] args) 
 	{
@@ -34,19 +40,65 @@ public class BuildTrafficLight
 
 		ramzorim[16]=new Ramzor(1,30,555,645);
 
-		TrafficLightFrame tlf=new TrafficLightFrame(" ���''� installation of traffic lights",ramzorim);
+		TrafficLightFrame tlf=new TrafficLightFrame("  installation of traffic lights",ramzorim);
 
-		new ShloshaAvot(ramzorim[0],tlf.myPanel,1);
-		new ShloshaAvot(ramzorim[1],tlf.myPanel,2);
-		new ShloshaAvot(ramzorim[2],tlf.myPanel,3);
-		new ShloshaAvot(ramzorim[3],tlf.myPanel,4);
+		ShloshaAvot zero =new ShloshaAvot(ramzorim[0],tlf.myPanel,1,new Event64(),new Event64(),new Event64());
+		ShloshaAvot one = new ShloshaAvot(ramzorim[1],tlf.myPanel,2,new Event64(),new Event64(),new Event64());
+		ShloshaAvot two = new ShloshaAvot(ramzorim[2],tlf.myPanel,3,new Event64(),new Event64(),new Event64());
+		ShloshaAvot three = new ShloshaAvot(ramzorim[3],tlf.myPanel,4,new Event64(),new Event64(),new Event64());
 
-		new ShneyLuchot(ramzorim[4],tlf.myPanel);
-		new ShneyLuchot(ramzorim[5],tlf.myPanel);
-		new ShneyLuchot(ramzorim[9],tlf.myPanel);
-		new ShneyLuchot(ramzorim[10],tlf.myPanel);
+		ShneyLuchot four = new ShneyLuchot(ramzorim[4],tlf.myPanel,new Event64(),new Event64(),new Event64());
+		ShneyLuchot five =new ShneyLuchot(ramzorim[5],tlf.myPanel,new Event64(),new Event64(),new Event64());
+		ShneyLuchot six =new ShneyLuchot(ramzorim[6],tlf.myPanel,new Event64(),new Event64(),new Event64());
+		ShneyLuchot seven =new ShneyLuchot(ramzorim[7],tlf.myPanel,new Event64(),new Event64(),new Event64());
+		ShneyLuchot eight =new ShneyLuchot(ramzorim[8],tlf.myPanel,new Event64(),new Event64(),new Event64());
+		ShneyLuchot nine =new ShneyLuchot(ramzorim[9],tlf.myPanel,new Event64(),new Event64(),new Event64());
+		ShneyLuchot ten =new ShneyLuchot(ramzorim[10],tlf.myPanel,new Event64(),new Event64(),new Event64());
+		ShneyLuchot eleven =new ShneyLuchot(ramzorim[11],tlf.myPanel,new Event64(),new Event64(),new Event64());
+		ShneyLuchot twelve =new ShneyLuchot(ramzorim[12],tlf.myPanel,new Event64(),new Event64(),new Event64());
+		ShneyLuchot thirteen =new ShneyLuchot(ramzorim[13],tlf.myPanel,new Event64(),new Event64(),new Event64());
+		ShneyLuchot fourteen =new ShneyLuchot(ramzorim[14],tlf.myPanel,new Event64(),new Event64(),new Event64());
+		ShneyLuchot fifteen =new ShneyLuchot(ramzorim[15],tlf.myPanel,new Event64(),new Event64(),new Event64());
 
-		new Echad(ramzorim[16],tlf.myPanel);
+		Echad sixteen =new Echad(ramzorim[16],tlf.myPanel);
+
+		Modes currentMode = Modes.WEEKDAY;
+		Phase currentPhase=Phase.INIT;
+
+		ArrayList<Object> phaseA = new ArrayList<Object>();
+		phaseA.add(zero);
+		phaseA.add(six);
+		phaseA.add(seven);
+		phaseA.add(nine);
+		phaseA.add(ten);
+		phaseA.add(twelve);
+		phaseA.add(thirteen);
+
+		ArrayList<Object> phaseB= new ArrayList<Object>();
+		phaseB.add(one);
+		phaseB.add(four);
+		phaseB.add(five);
+		phaseB.add(six);
+		phaseB.add(seven);
+		phaseB.add(nine);
+		phaseB.add(ten);
+		phaseB.add(twelve);
+		phaseB.add(thirteen);
+
+		ArrayList<Object> phaseC= new ArrayList<Object>();
+		phaseC.add(two);
+		phaseC.add(three);
+		phaseC.add(four);
+		phaseC.add(five);
+		phaseC.add(eight);
+		phaseC.add(eleven);
+		phaseC.add(fourteen);
+		phaseC.add(fifteen);
+
+		ArrayList<ArrayList<Object>> phaseList = new ArrayList<ArrayList<Object>>();
+		phaseList.add(phaseA);
+		phaseList.add(phaseB);
+		phaseList.add(phaseC);
 
 		MyActionListener myListener=new MyActionListener();
 
@@ -76,9 +128,53 @@ public class BuildTrafficLight
 		butt[12]  =new JRadioButton();
 		butt[12].setName(Integer.toString(16));
 		butt[12].setBounds(50,30, 55, 20);
-		butt[12].setText("���");
+		butt[12].setText("SHABBOS");
 		butt[12].setOpaque(false);
 		butt[12].addActionListener(myListener);
 		tlf.myPanel.add(butt[12]);
+		while(true){
+			switch (currentMode){
+				case WEEKDAY:
+					while(!butt[12].isSelected()){
+						switch (currentPhase) {
+							case INIT:
+								break;
+							case PHASE_A:
+								break;
+							case PHASE_B:
+								break;
+							case PHASE_C:
+								break;
+						}
+					}
+					break;
+				case SHABBOS:
+					break;
+
+
+
+
+			}
+
+
+
+
+
+		}
+
+
+	}
+
+	public void init(ArrayList<ArrayList<Object>> phaseList){
+		for(ArrayList<Object> p:phaseList){
+			for(Object r : p){
+				if( r instanceof ShloshaAvot){
+					((ShloshaAvot) r).m_stateQueue.
+				}
+				if( r instanceof ShneyLuchot){
+
+				}
+			}
+		}
 	}
 }
