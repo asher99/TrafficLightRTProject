@@ -36,7 +36,7 @@ class Event64
 			try
 			{ 
 				wait();
-			} catch(InterruptedException e){ } ;
+			} catch(InterruptedException e){ }
 		}
 
 		Object s ;
@@ -95,7 +95,7 @@ class Event64
 			try 
 			{
 				wait();
-			} catch(InterruptedException exce) {};
+			} catch(InterruptedException exce) {}
 		}
 
 		return true;
