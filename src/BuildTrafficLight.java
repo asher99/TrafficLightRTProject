@@ -1,5 +1,5 @@
 
-import javax.swing.JRadioButton;
+import javax.swing.*;
 import java.util.ArrayList;
 
 import static java.lang.Thread.sleep;
@@ -14,7 +14,7 @@ import static java.lang.Thread.sleep;
 public class BuildTrafficLight {
 	enum Modes {SHABBOS, WEEKDAY}
 
-	enum Phase {INIT, PHASE_A, PHASE_B, PHASE_C}
+//	enum Phase {INIT, PHASE_A, PHASE_B, PHASE_C}
 
 
 	public static void main(String[] args) {
@@ -100,10 +100,12 @@ public class BuildTrafficLight {
 		phaseList.add(phaseB);
 		phaseList.add(phaseC);
 
-		MyActionListener myListener = new MyActionListener();
+		Event64 buttonQueue = new Event64();
+		Event64 evq = new Event64();
+		MyActionListener myListener = new MyActionListener(evq);
+		ButtonHandler bth = new ButtonHandler(evq,buttonQueue);
 
 		JRadioButton butt[] = new JRadioButton[13];
-
 		for (int i = 0; i < butt.length - 1; i++) {
 			butt[i] = new JRadioButton();
 			butt[i].setName(Integer.toString(i + 4));
@@ -111,6 +113,7 @@ public class BuildTrafficLight {
 			butt[i].addActionListener(myListener);
 			tlf.myPanel.add(butt[i]);
 		}
+		bth.setButtons(butt);
 		butt[0].setBounds(620, 30, 18, 18);
 		butt[1].setBounds(620, 218, 18, 18);
 		butt[2].setBounds(620, 267, 18, 18);
@@ -131,6 +134,7 @@ public class BuildTrafficLight {
 		butt[12].setOpaque(false);
 		butt[12].addActionListener(myListener);
 		tlf.myPanel.add(butt[12]);
+		//Phase phase_to_jump;
 		try {
 			while (true) {
 
@@ -147,19 +151,43 @@ public class BuildTrafficLight {
 									turnGreen(phaseA);
 									sleep(5000);
 									turnRed(phaseA);
+									if(buttonQueue.arrivedEvent()){
+										//disableButtons(butt);
+										currentPhase = (Phase)buttonQueue.waitEvent();
+										//enableButtons(butt);
+										//ackQueue.sendEvent();
+									}
+									else{
 									currentPhase = Phase.PHASE_B;
+									}
 									break;
 								case PHASE_B:
 									turnGreen(phaseB);
 									sleep(5000);
 									turnRed(phaseB);
-									currentPhase = Phase.PHASE_C;
+									if(buttonQueue.arrivedEvent()){
+										//disableButtons(butt);
+										currentPhase = (Phase)buttonQueue.waitEvent();
+										//enableButtons(butt);
+										//ackQueue.sendEvent();
+									}
+									else {
+										currentPhase = Phase.PHASE_C;
+									}
 									break;
 								case PHASE_C:
 									turnGreen(phaseC);
 									sleep(5000);
 									turnRed(phaseC);
-									currentPhase = Phase.PHASE_A;
+									if(buttonQueue.arrivedEvent()){
+									//	disableButtons(butt);
+										currentPhase = (Phase)buttonQueue.waitEvent();
+									//	enableButtons(butt);
+									//	ackQueue.sendEvent();
+									}
+									else {
+										currentPhase = Phase.PHASE_A;
+									}
 									break;
 							}
 						}
@@ -169,10 +197,12 @@ public class BuildTrafficLight {
 
 					case SHABBOS:
 						//while(butt[12].isSelected());
+						disableButtons(butt);
 						if(!butt[12].isSelected()){
 							enterWeekDayMode(phaseList);
 							currentMode = Modes.WEEKDAY;
 							currentPhase = Phase.PHASE_A;
+							enableButtons(butt);
 						}
 						break;
 				}
@@ -188,43 +218,6 @@ public class BuildTrafficLight {
 		turnRed(phaseList.get(0));
 		turnRed(phaseList.get(1));
 		turnRed(phaseList.get(2));
-
-		/*((ShloshaAvot)(phaseList.get(0).get(0))).m_stateQueue.sendEvent();
-		((ShloshaAvot)(phaseList.get(1).get(0))).m_stateQueue.sendEvent();
-		((ShloshaAvot)(phaseList.get(2).get(0))).m_stateQueue.sendEvent();
-		((ShloshaAvot)(phaseList.get(2).get(1))).m_stateQueue.sendEvent();
-
-		((ShneyLuchot)(phaseList.get(2).get(2))).m_stateQueue.sendEvent();
-		((ShneyLuchot)(phaseList.get(2).get(3))).m_stateQueue.sendEvent();
-		((ShneyLuchot)(phaseList.get(0).get(1))).m_stateQueue.sendEvent();
-		((ShneyLuchot)(phaseList.get(0).get(2))).m_stateQueue.sendEvent();
-		((ShneyLuchot)(phaseList.get(2).get(4))).m_stateQueue.sendEvent();
-		((ShneyLuchot)(phaseList.get(0).get(3))).m_stateQueue.sendEvent();
-		((ShneyLuchot)(phaseList.get(0).get(4))).m_stateQueue.sendEvent();
-		((ShneyLuchot)(phaseList.get(2).get(5))).m_stateQueue.sendEvent();
-		((ShneyLuchot)(phaseList.get(0).get(5))).m_stateQueue.sendEvent();
-		((ShneyLuchot)(phaseList.get(0).get(6))).m_stateQueue.sendEvent();
-		((ShneyLuchot)(phaseList.get(2).get(6))).m_stateQueue.sendEvent();
-		((ShneyLuchot)(phaseList.get(2).get(7))).m_stateQueue.sendEvent();
-
-
-		((ShloshaAvot)(phaseList.get(0).get(0))).m_ackQueue.waitEvent();
-		((ShloshaAvot)(phaseList.get(1).get(0))).m_ackQueue.waitEvent();
-		((ShloshaAvot)(phaseList.get(2).get(0))).m_ackQueue.waitEvent();
-		((ShloshaAvot)(phaseList.get(2).get(1))).m_ackQueue.waitEvent();
-
-		((ShneyLuchot)(phaseList.get(2).get(2))).m_ackQueue.waitEvent();
-		((ShneyLuchot)(phaseList.get(2).get(3))).m_ackQueue.waitEvent();
-		((ShneyLuchot)(phaseList.get(0).get(1))).m_ackQueue.waitEvent();
-		((ShneyLuchot)(phaseList.get(0).get(2))).m_ackQueue.waitEvent();
-		((ShneyLuchot)(phaseList.get(2).get(4))).m_ackQueue.waitEvent();
-		((ShneyLuchot)(phaseList.get(0).get(3))).m_ackQueue.waitEvent();
-		((ShneyLuchot)(phaseList.get(0).get(4))).m_ackQueue.waitEvent();
-		((ShneyLuchot)(phaseList.get(2).get(5))).m_ackQueue.waitEvent();
-		((ShneyLuchot)(phaseList.get(0).get(5))).m_ackQueue.waitEvent();
-		((ShneyLuchot)(phaseList.get(0).get(6))).m_ackQueue.waitEvent();
-		((ShneyLuchot)(phaseList.get(2).get(6))).m_ackQueue.waitEvent();
-		((ShneyLuchot)(phaseList.get(2).get(7))).m_ackQueue.waitEvent();*/
 	}
 
 	public static void turnGreen(ArrayList<Object> phase){
@@ -334,6 +327,20 @@ public class BuildTrafficLight {
 			sleep(1000);
 		}catch (InterruptedException e){}
 
+	}
+
+	public static void disableButtons(JRadioButton buttons[]){
+		for (JRadioButton btn : buttons) {
+			if(!btn.getName().equals("16")) {
+				btn.setEnabled(false);
+			}
+		}
+	}
+
+	public static void enableButtons(JRadioButton buttons[]){
+		for (JRadioButton btn : buttons) {
+			btn.setEnabled(true);
+		}
 	}
 
 }
