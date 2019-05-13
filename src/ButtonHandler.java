@@ -5,6 +5,7 @@ public class ButtonHandler extends Thread {
     Event64 m_ackQueue;
     JRadioButton m_butt[];
 
+
     public ButtonHandler(Event64 q,Event64 a){
         m_pressedQueue =q;
         m_ackQueue = a;
@@ -26,11 +27,6 @@ public class ButtonHandler extends Thread {
         }
     }
 
-    public Phase getMatchingPhase(int index){
-
-        return Phase.PHASE_A;
-    }
-
     @Override
     public void run()
     {
@@ -39,7 +35,7 @@ public class ButtonHandler extends Thread {
             while (true) {
                 butt = (JRadioButton) m_pressedQueue.waitEvent();
                 disableButtons();
-                m_ackQueue.sendEvent( getMatchingPhase(Integer.parseInt(butt.getName())-4));
+                m_ackQueue.sendEvent( Integer.parseInt(butt.getName()));
                 sleep(1000);
                 butt.setSelected(false);
                 enableButtons();

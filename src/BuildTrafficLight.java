@@ -65,6 +65,37 @@ public class BuildTrafficLight {
 		Modes currentMode = Modes.WEEKDAY;
 		Phase currentPhase = Phase.INIT;
 
+		ArrayList<Integer> int_to_phaseA = new ArrayList<Integer>();
+		int_to_phaseA.add(0);
+		int_to_phaseA.add(6);
+		int_to_phaseA.add(7);
+		int_to_phaseA.add(9);
+		int_to_phaseA.add(10);
+		int_to_phaseA.add(12);
+		int_to_phaseA.add(13);
+
+		ArrayList<Integer> int_to_phaseB = new ArrayList<Integer>();
+		int_to_phaseB.add(1);
+		int_to_phaseB.add(4);
+		int_to_phaseB.add(5);
+		int_to_phaseB.add(6);
+		int_to_phaseB.add(7);
+		int_to_phaseB.add(9);
+		int_to_phaseB.add(10);
+		int_to_phaseB.add(12);
+		int_to_phaseB.add(13);
+
+		ArrayList<Integer> int_to_phaseC = new ArrayList<Integer>();
+		int_to_phaseC.add(2);
+		int_to_phaseC.add(3);
+		int_to_phaseC.add(4);
+		int_to_phaseC.add(5);
+		int_to_phaseC.add(8);
+		int_to_phaseC.add(11);
+		int_to_phaseC.add(14);
+		int_to_phaseC.add(15);
+
+
 		ArrayList<Object> phaseA = new ArrayList<Object>();
 		phaseA.add(zero);
 		phaseA.add(six);
@@ -134,7 +165,7 @@ public class BuildTrafficLight {
 		butt[12].setOpaque(false);
 		butt[12].addActionListener(myListener);
 		tlf.myPanel.add(butt[12]);
-		//Phase phase_to_jump;
+		int butEv=0;
 		try {
 			while (true) {
 
@@ -153,9 +184,14 @@ public class BuildTrafficLight {
 									turnRed(phaseA);
 									if(buttonQueue.arrivedEvent()){
 										//disableButtons(butt);
-										currentPhase = (Phase)buttonQueue.waitEvent();
+										butEv = (int)buttonQueue.waitEvent();
+										if(int_to_phaseC.contains(butEv) ){
+											currentPhase = Phase.PHASE_C;
+										}
+										else{
+											currentPhase = Phase.PHASE_B;
+										}
 										//enableButtons(butt);
-										//ackQueue.sendEvent();
 									}
 									else{
 									currentPhase = Phase.PHASE_B;
@@ -167,9 +203,14 @@ public class BuildTrafficLight {
 									turnRed(phaseB);
 									if(buttonQueue.arrivedEvent()){
 										//disableButtons(butt);
-										currentPhase = (Phase)buttonQueue.waitEvent();
+										butEv = (int)buttonQueue.waitEvent();
+										if(int_to_phaseA.contains(butEv) ){
+											currentPhase = Phase.PHASE_A;
+										}
+										else{
+											currentPhase = Phase.PHASE_C;
+										}
 										//enableButtons(butt);
-										//ackQueue.sendEvent();
 									}
 									else {
 										currentPhase = Phase.PHASE_C;
@@ -181,9 +222,14 @@ public class BuildTrafficLight {
 									turnRed(phaseC);
 									if(buttonQueue.arrivedEvent()){
 									//	disableButtons(butt);
-										currentPhase = (Phase)buttonQueue.waitEvent();
+										butEv = (int)buttonQueue.waitEvent();
+										if(int_to_phaseB.contains(butEv) ){
+											currentPhase = Phase.PHASE_B;
+										}
+										else{
+											currentPhase = Phase.PHASE_A; }
 									//	enableButtons(butt);
-									//	ackQueue.sendEvent();
+
 									}
 									else {
 										currentPhase = Phase.PHASE_A;
@@ -191,13 +237,14 @@ public class BuildTrafficLight {
 									break;
 							}
 						}
+						disableButtons(butt);
 						enterShabbosMode(phaseList);
 						currentMode = Modes.SHABBOS;
 						break;
 
 					case SHABBOS:
 						//while(butt[12].isSelected());
-						disableButtons(butt);
+
 						if(!butt[12].isSelected()){
 							enterWeekDayMode(phaseList);
 							currentMode = Modes.WEEKDAY;
