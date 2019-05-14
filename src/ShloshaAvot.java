@@ -21,7 +21,7 @@ public class ShloshaAvot extends Thread
 	Event64 m_ackQueue;
 	Modes m_currentMode;
 	State m_currentState;
-	private boolean stop=true;
+	private boolean stop = false;
 	public ShloshaAvot( Ramzor ramzor,JPanel panel,int key,Event64 modeQueue,Event64 stateQueue,Event64 ackQueue)
 	{
 		this.ramzor=ramzor;
@@ -47,6 +47,7 @@ public class ShloshaAvot extends Thread
 						while(m_currentMode == Modes.WEEKDAY){
 							switch(m_currentState) { // Switch deals with STATE-QUEUE
 								case RED:
+									stop=true;
 									setLight(3, Color.GRAY);
 									setLight(1, Color.RED);
 									setLight(2, Color.GRAY);
@@ -79,11 +80,13 @@ public class ShloshaAvot extends Thread
 									setLight(1, Color.GRAY);
 									setLight(2, Color.GRAY);
 									setLight(3, Color.GREEN);
+									stop=false;
 									ev = (Events)m_stateQueue.waitEvent();
 									switch(ev){
 										case TURN_RED:
 											m_currentState = State.RED;
 											m_ackQueue.sendEvent();
+
 											break;
 
 										case ENTER_SHABBOS_MODE:
