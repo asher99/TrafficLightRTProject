@@ -14,10 +14,8 @@ import static java.lang.Thread.sleep;
 public class BuildTrafficLight {
 	enum Modes {SHABBOS, WEEKDAY}
 
-//	enum Phase {INIT, PHASE_A, PHASE_B, PHASE_C}
 
-
-	public static void main(String[] args) {
+	public  void startJunction() {
 		final int numOfLights = 4 + 12 + 1;
 		Ramzor ramzorim[] = new Ramzor[numOfLights];
 		ramzorim[0] = new Ramzor(3, 40, 430, 110, 472, 110, 514, 110);
@@ -261,13 +259,14 @@ public class BuildTrafficLight {
 
 	}
 
-	public static void init(ArrayList<ArrayList<Object>> phaseList) {
+
+	public  void init(ArrayList<ArrayList<Object>> phaseList) {
 		turnRed(phaseList.get(0));
 		turnRed(phaseList.get(1));
 		turnRed(phaseList.get(2));
 	}
 
-	public static void turnGreen(ArrayList<Object> phase){
+	public  void turnGreen(ArrayList<Object> phase){
 		for (Object r : phase) {
 			if (r instanceof ShloshaAvot) {
 				((ShloshaAvot) r).m_stateQueue.sendEvent(Events.TURN_GREEN);
@@ -278,14 +277,13 @@ public class BuildTrafficLight {
 		}
 	}
 
-	public static void turnRed(ArrayList<Object> phase){
+	public  void turnRed(ArrayList<Object> phase){
 			for (Object r : phase) {
 				if (r instanceof ShloshaAvot) {
 					((ShloshaAvot) r).m_stateQueue.sendEvent(Events.TURN_RED);
 				} else if (r instanceof ShneyLuchot) {
 					((ShneyLuchot) r).m_stateQueue.sendEvent(Events.TURN_RED);
 				}
-
 			}
 
 		for (Object r : phase) {
@@ -298,8 +296,7 @@ public class BuildTrafficLight {
 	}
 
 
-	public static void enterShabbosMode(ArrayList<ArrayList<Object>> phaseList) {
-
+	public  void enterShabbosMode(ArrayList<ArrayList<Object>> phaseList) {
 		turnRed(phaseList.get(0));
 		turnRed(phaseList.get(1));
 		turnRed(phaseList.get(2));
@@ -376,7 +373,7 @@ public class BuildTrafficLight {
 
 	}
 
-	public static void disableButtons(JRadioButton buttons[]){
+	public  void disableButtons(JRadioButton buttons[]){
 		for (JRadioButton btn : buttons) {
 			if(!btn.getName().equals("16")) {
 				btn.setEnabled(false);
@@ -384,10 +381,16 @@ public class BuildTrafficLight {
 		}
 	}
 
-	public static void enableButtons(JRadioButton buttons[]){
+	public  void enableButtons(JRadioButton buttons[]){
 		for (JRadioButton btn : buttons) {
 			btn.setEnabled(true);
 		}
+	}
+
+
+	public static void main(String[] args) { //MAIN
+		BuildTrafficLight controller = new BuildTrafficLight();
+		controller.startJunction();
 	}
 
 }
