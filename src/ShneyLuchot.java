@@ -22,15 +22,20 @@ class ShneyLuchot extends Thread
 	public Event64 m_ackQueue;
 	Modes m_currentMode;
 	State m_currentState;
-	public ShneyLuchot( Ramzor ramzor,JPanel panel,Event64 modeQueue,Event64 stateQueue,Event64 ackQueue)
+	private boolean stop = false;
+	public ShneyLuchot( Ramzor ramzor,JPanel panel,Event64 modeQueue,Event64 stateQueue,Event64 ackQueue, int key)
 	{
 		this.ramzor=ramzor;
 		this.panel=panel;
+		//new PedestrianMaker(panel,this,key);
+		new PedestrianMaker(panel,this,key);
 		this.m_currentMode = Modes.OFF;
 		this.m_modeQueue = modeQueue;
 		this.m_currentState=State.RED;
 		this.m_stateQueue = stateQueue;
 		this.m_ackQueue = ackQueue;
+
+
 		start();
 	}
 
@@ -46,6 +51,7 @@ class ShneyLuchot extends Thread
 						while(m_currentMode == Modes.WEEKDAY) {
 							switch (m_currentState) { // Switch deals with STATE-QUEUE
 								case RED:
+									stop = true;
 									setLight(1, Color.RED);
 									setLight(2, Color.GRAY);
 									ev = (Events)m_stateQueue.waitEvent();
@@ -69,6 +75,7 @@ class ShneyLuchot extends Thread
 								case GREEN:
 									setLight(1, Color.GRAY);
 									setLight(2, Color.GREEN);
+									stop = false;
 									ev = (Events)m_stateQueue.waitEvent();
                                     switch(ev){
                                         case TURN_RED:
@@ -115,9 +122,15 @@ class ShneyLuchot extends Thread
 		} catch (InterruptedException e) {}
 
 	}
+
 	public void setLight(int place, Color color)
 	{
 		ramzor.colorLight[place-1]=color;
 		panel.repaint();
+	}
+
+	public boolean isStop()
+	{
+		return stop;
 	}
 }

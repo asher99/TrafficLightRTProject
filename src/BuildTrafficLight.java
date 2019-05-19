@@ -45,18 +45,18 @@ public class BuildTrafficLight {
 		ShloshaAvot two = new ShloshaAvot(ramzorim[2], tlf.myPanel, 3, new Event64(), new Event64(), new Event64());
 		ShloshaAvot three = new ShloshaAvot(ramzorim[3], tlf.myPanel, 4, new Event64(), new Event64(), new Event64());
 
-		ShneyLuchot four = new ShneyLuchot(ramzorim[4], tlf.myPanel, new Event64(), new Event64(), new Event64());
-		ShneyLuchot five = new ShneyLuchot(ramzorim[5], tlf.myPanel, new Event64(), new Event64(), new Event64());
-		ShneyLuchot six = new ShneyLuchot(ramzorim[6], tlf.myPanel, new Event64(), new Event64(), new Event64());
-		ShneyLuchot seven = new ShneyLuchot(ramzorim[7], tlf.myPanel, new Event64(), new Event64(), new Event64());
-		ShneyLuchot eight = new ShneyLuchot(ramzorim[8], tlf.myPanel, new Event64(), new Event64(), new Event64());
-		ShneyLuchot nine = new ShneyLuchot(ramzorim[9], tlf.myPanel, new Event64(), new Event64(), new Event64());
-		ShneyLuchot ten = new ShneyLuchot(ramzorim[10], tlf.myPanel, new Event64(), new Event64(), new Event64());
-		ShneyLuchot eleven = new ShneyLuchot(ramzorim[11], tlf.myPanel, new Event64(), new Event64(), new Event64());
-		ShneyLuchot twelve = new ShneyLuchot(ramzorim[12], tlf.myPanel, new Event64(), new Event64(), new Event64());
-		ShneyLuchot thirteen = new ShneyLuchot(ramzorim[13], tlf.myPanel, new Event64(), new Event64(), new Event64());
-		ShneyLuchot fourteen = new ShneyLuchot(ramzorim[14], tlf.myPanel, new Event64(), new Event64(), new Event64());
-		ShneyLuchot fifteen = new ShneyLuchot(ramzorim[15], tlf.myPanel, new Event64(), new Event64(), new Event64());
+		ShneyLuchot four = new ShneyLuchot(ramzorim[4], tlf.myPanel, new Event64(), new Event64(), new Event64(),1);
+		ShneyLuchot five = new ShneyLuchot(ramzorim[5], tlf.myPanel, new Event64(), new Event64(), new Event64(),1);
+		ShneyLuchot six = new ShneyLuchot(ramzorim[6], tlf.myPanel, new Event64(), new Event64(), new Event64(),2);
+		ShneyLuchot seven = new ShneyLuchot(ramzorim[7], tlf.myPanel, new Event64(), new Event64(), new Event64(),2);
+		ShneyLuchot eight = new ShneyLuchot(ramzorim[8], tlf.myPanel, new Event64(), new Event64(), new Event64(),3);
+		ShneyLuchot nine = new ShneyLuchot(ramzorim[9], tlf.myPanel, new Event64(), new Event64(), new Event64(),4);
+		ShneyLuchot ten = new ShneyLuchot(ramzorim[10], tlf.myPanel, new Event64(), new Event64(), new Event64(),4);
+		ShneyLuchot eleven = new ShneyLuchot(ramzorim[11], tlf.myPanel, new Event64(), new Event64(), new Event64(),3);
+		ShneyLuchot twelve = new ShneyLuchot(ramzorim[12], tlf.myPanel, new Event64(), new Event64(), new Event64(),5);
+		ShneyLuchot thirteen = new ShneyLuchot(ramzorim[13], tlf.myPanel, new Event64(), new Event64(), new Event64(),5);
+		ShneyLuchot fourteen = new ShneyLuchot(ramzorim[14], tlf.myPanel, new Event64(), new Event64(), new Event64(),6);
+		ShneyLuchot fifteen = new ShneyLuchot(ramzorim[15], tlf.myPanel, new Event64(), new Event64(), new Event64(),6);
 
 		Echad sixteen = new Echad(ramzorim[16], tlf.myPanel);
 

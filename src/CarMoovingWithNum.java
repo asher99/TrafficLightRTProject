@@ -7,7 +7,7 @@ import javax.swing.JPanel;
  */
 
 /**
- * @author �����
+ * @author
  */
 
 public class CarMoovingWithNum extends Thread
