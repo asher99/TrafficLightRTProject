@@ -17,20 +17,18 @@ class ShneyLuchot extends Thread
 	enum State {RED,GREEN}
 	Ramzor ramzor;
 	JPanel panel;
-	public Event64 m_modeQueue;
 	public Event64 m_stateQueue;
 	public Event64 m_ackQueue;
 	Modes m_currentMode;
 	State m_currentState;
 	private boolean stop = false;
-	public ShneyLuchot( Ramzor ramzor,JPanel panel,Event64 modeQueue,Event64 stateQueue,Event64 ackQueue, int key)
+	public ShneyLuchot( Ramzor ramzor,JPanel panel,Event64 stateQueue,Event64 ackQueue, int key)
 	{
 		this.ramzor=ramzor;
 		this.panel=panel;
 		//new PedestrianMaker(panel,this,key);
 		new PedestrianMaker(panel,this,key);
 		this.m_currentMode = Modes.OFF;
-		this.m_modeQueue = modeQueue;
 		this.m_currentState=State.RED;
 		this.m_stateQueue = stateQueue;
 		this.m_ackQueue = ackQueue;

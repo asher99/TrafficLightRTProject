@@ -16,19 +16,18 @@ public class ShloshaAvot extends Thread
 	enum State {RED,YELLOW,GREEN}
 	Ramzor ramzor;
 	JPanel panel;
-	Event64 m_modeQueue;
+
 	Event64 m_stateQueue;
 	Event64 m_ackQueue;
 	Modes m_currentMode;
 	State m_currentState;
 	private boolean stop = false;
-	public ShloshaAvot( Ramzor ramzor,JPanel panel,int key,Event64 modeQueue,Event64 stateQueue,Event64 ackQueue)
+	public ShloshaAvot( Ramzor ramzor,JPanel panel,int key,Event64 stateQueue,Event64 ackQueue)
 	{
 		this.ramzor=ramzor;
 		this.panel=panel;
 		new CarsMaker(panel,this,key);
 		this.m_currentMode = Modes.OFF;
-		this.m_modeQueue = modeQueue;
 		this.m_currentState=State.RED;
 		this.m_stateQueue = stateQueue;
 		this.m_ackQueue = ackQueue;
@@ -70,7 +69,6 @@ public class ShloshaAvot extends Thread
 									break;
 
 								case YELLOW:
-									//setLight(1, Color.GRAY);
 									setLight(2, Color.YELLOW);
 									sleep(1000);
 									m_currentState = State.GREEN;
@@ -111,7 +109,6 @@ public class ShloshaAvot extends Thread
 							case ENTER_WEEKDAY_MODE:
 								setLight(2, Color.GRAY);
 								setLight(1, Color.RED);
-								//setLight(2, Color.GRAY);
 								m_currentMode=Modes.WEEKDAY;
 								m_currentState =State.RED;
 								m_ackQueue.sendEvent();

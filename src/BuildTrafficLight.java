@@ -40,23 +40,23 @@ public class BuildTrafficLight {
 
 		TrafficLightFrame tlf = new TrafficLightFrame("  installation of traffic lights", ramzorim);
 
-		ShloshaAvot zero = new ShloshaAvot(ramzorim[0], tlf.myPanel, 1, new Event64(), new Event64(), new Event64());
-		ShloshaAvot one = new ShloshaAvot(ramzorim[1], tlf.myPanel, 2, new Event64(), new Event64(), new Event64());
-		ShloshaAvot two = new ShloshaAvot(ramzorim[2], tlf.myPanel, 3, new Event64(), new Event64(), new Event64());
-		ShloshaAvot three = new ShloshaAvot(ramzorim[3], tlf.myPanel, 4, new Event64(), new Event64(), new Event64());
+		ShloshaAvot zero = new ShloshaAvot(ramzorim[0], tlf.myPanel, 1,  new Event64(), new Event64());
+		ShloshaAvot one = new ShloshaAvot(ramzorim[1], tlf.myPanel, 2,  new Event64(), new Event64());
+		ShloshaAvot two = new ShloshaAvot(ramzorim[2], tlf.myPanel, 3,  new Event64(), new Event64());
+		ShloshaAvot three = new ShloshaAvot(ramzorim[3], tlf.myPanel, 4, new Event64(), new Event64());
 
-		ShneyLuchot four = new ShneyLuchot(ramzorim[4], tlf.myPanel, new Event64(), new Event64(), new Event64(),1);
-		ShneyLuchot five = new ShneyLuchot(ramzorim[5], tlf.myPanel, new Event64(), new Event64(), new Event64(),1);
-		ShneyLuchot six = new ShneyLuchot(ramzorim[6], tlf.myPanel, new Event64(), new Event64(), new Event64(),2);
-		ShneyLuchot seven = new ShneyLuchot(ramzorim[7], tlf.myPanel, new Event64(), new Event64(), new Event64(),2);
-		ShneyLuchot eight = new ShneyLuchot(ramzorim[8], tlf.myPanel, new Event64(), new Event64(), new Event64(),3);
-		ShneyLuchot nine = new ShneyLuchot(ramzorim[9], tlf.myPanel, new Event64(), new Event64(), new Event64(),4);
-		ShneyLuchot ten = new ShneyLuchot(ramzorim[10], tlf.myPanel, new Event64(), new Event64(), new Event64(),4);
-		ShneyLuchot eleven = new ShneyLuchot(ramzorim[11], tlf.myPanel, new Event64(), new Event64(), new Event64(),3);
-		ShneyLuchot twelve = new ShneyLuchot(ramzorim[12], tlf.myPanel, new Event64(), new Event64(), new Event64(),5);
-		ShneyLuchot thirteen = new ShneyLuchot(ramzorim[13], tlf.myPanel, new Event64(), new Event64(), new Event64(),5);
-		ShneyLuchot fourteen = new ShneyLuchot(ramzorim[14], tlf.myPanel, new Event64(), new Event64(), new Event64(),6);
-		ShneyLuchot fifteen = new ShneyLuchot(ramzorim[15], tlf.myPanel, new Event64(), new Event64(), new Event64(),6);
+		ShneyLuchot four = new ShneyLuchot(ramzorim[4], tlf.myPanel, new Event64(), new Event64(),1);
+		ShneyLuchot five = new ShneyLuchot(ramzorim[5], tlf.myPanel, new Event64(), new Event64(),1);
+		ShneyLuchot six = new ShneyLuchot(ramzorim[6], tlf.myPanel,  new Event64(), new Event64(),2);
+		ShneyLuchot seven = new ShneyLuchot(ramzorim[7], tlf.myPanel,new Event64(), new Event64(),2);
+		ShneyLuchot eight = new ShneyLuchot(ramzorim[8], tlf.myPanel, new Event64(), new Event64(),3);
+		ShneyLuchot nine = new ShneyLuchot(ramzorim[9], tlf.myPanel,  new Event64(), new Event64(),4);
+		ShneyLuchot ten = new ShneyLuchot(ramzorim[10], tlf.myPanel,  new Event64(), new Event64(),4);
+		ShneyLuchot eleven = new ShneyLuchot(ramzorim[11], tlf.myPanel,  new Event64(), new Event64(),3);
+		ShneyLuchot twelve = new ShneyLuchot(ramzorim[12], tlf.myPanel,  new Event64(), new Event64(),5);
+		ShneyLuchot thirteen = new ShneyLuchot(ramzorim[13], tlf.myPanel, new Event64(), new Event64(),5);
+		ShneyLuchot fourteen = new ShneyLuchot(ramzorim[14], tlf.myPanel, new Event64(), new Event64(),6);
+		ShneyLuchot fifteen = new ShneyLuchot(ramzorim[15], tlf.myPanel, new Event64(), new Event64(),6);
 
 		Echad sixteen = new Echad(ramzorim[16], tlf.myPanel);
 
@@ -181,7 +181,6 @@ public class BuildTrafficLight {
 									sleep(5000);
 									turnRed(phaseA);
 									if(buttonQueue.arrivedEvent()){
-										//disableButtons(butt);
 										butEv = (int)buttonQueue.waitEvent();
 										if(int_to_phaseC.contains(butEv) ){
 											currentPhase = Phase.PHASE_C;
@@ -189,7 +188,6 @@ public class BuildTrafficLight {
 										else{
 											currentPhase = Phase.PHASE_B;
 										}
-										//enableButtons(butt);
 									}
 									else{
 									currentPhase = Phase.PHASE_B;
@@ -200,7 +198,6 @@ public class BuildTrafficLight {
 									sleep(5000);
 									turnRed(phaseB);
 									if(buttonQueue.arrivedEvent()){
-										//disableButtons(butt);
 										butEv = (int)buttonQueue.waitEvent();
 										if(int_to_phaseA.contains(butEv) ){
 											currentPhase = Phase.PHASE_A;
@@ -208,7 +205,6 @@ public class BuildTrafficLight {
 										else{
 											currentPhase = Phase.PHASE_C;
 										}
-										//enableButtons(butt);
 									}
 									else {
 										currentPhase = Phase.PHASE_C;
@@ -219,15 +215,12 @@ public class BuildTrafficLight {
 									sleep(5000);
 									turnRed(phaseC);
 									if(buttonQueue.arrivedEvent()){
-									//	disableButtons(butt);
 										butEv = (int)buttonQueue.waitEvent();
 										if(int_to_phaseB.contains(butEv) ){
 											currentPhase = Phase.PHASE_B;
 										}
 										else{
 											currentPhase = Phase.PHASE_A; }
-									//	enableButtons(butt);
-
 									}
 									else {
 										currentPhase = Phase.PHASE_A;
@@ -241,8 +234,6 @@ public class BuildTrafficLight {
 						break;
 
 					case SHABBOS:
-						//while(butt[12].isSelected());
-
 						if(!butt[12].isSelected()){
 							enterWeekDayMode(phaseList);
 							currentMode = Modes.WEEKDAY;
@@ -251,12 +242,8 @@ public class BuildTrafficLight {
 						}
 						break;
 				}
-
-
 			}
 		}catch (InterruptedException e){}
-
-
 	}
 
 
@@ -273,7 +260,6 @@ public class BuildTrafficLight {
 			} else if (r instanceof ShneyLuchot) {
 				((ShneyLuchot) r).m_stateQueue.sendEvent(Events.TURN_GREEN);
 			}
-
 		}
 	}
 
@@ -326,9 +312,6 @@ public class BuildTrafficLight {
 	}
 
 	public static void enterWeekDayMode(ArrayList<ArrayList<Object>> phaseList) {
-		/*turnRed(phaseList.get(0));
-		turnRed(phaseList.get(1));
-		turnRed(phaseList.get(2));*/
 
 		((ShloshaAvot)(phaseList.get(0).get(0))).m_stateQueue.sendEvent(Events.ENTER_WEEKDAY_MODE);
 		((ShloshaAvot)(phaseList.get(1).get(0))).m_stateQueue.sendEvent(Events.ENTER_WEEKDAY_MODE);
