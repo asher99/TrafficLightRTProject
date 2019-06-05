@@ -17,6 +17,8 @@ public class BuildTrafficLight {
 
 	public  void startJunction() {
 		final int numOfLights = 4 + 12 + 1;
+		Client770 myClient = new Client770();
+
 		Ramzor ramzorim[] = new Ramzor[numOfLights];
 		ramzorim[0] = new Ramzor(3, 40, 430, 110, 472, 110, 514, 110);
 		ramzorim[1] = new Ramzor(3, 40, 450, 310, 450, 352, 450, 394);
@@ -371,9 +373,9 @@ public class BuildTrafficLight {
 	}
 
 
-	public static void main(String[] args) { //MAIN
+	/*public static void main(String[] args) { //MAIN
 		BuildTrafficLight controller = new BuildTrafficLight();
 		controller.startJunction();
-	}
+	}*/
 
 }
