@@ -18,7 +18,7 @@ public class Dialog770 extends Thread // parallel dialogs on the same socket
     Server770 myServer;
     BufferedReader bufferSocketIn;
     PrintWriter bufferSocketOut;
-    DialogWin770 myOutput;
+   // DialogWin770 myOutput;
 
     public Dialog770(Socket clientSocket, Server770 myServer)
     {
@@ -45,7 +45,7 @@ public class Dialog770 extends Thread // parallel dialogs on the same socket
             System.err.println("server:Exception when opening sockets: " + e);
             return;
         }
-        myOutput = new DialogWin770("Dialog Win for: " + client.toString(), this);
+       // myOutput = new DialogWin770("Dialog Win for: " + client.toString(), this);
         start();
     }
 
@@ -58,12 +58,17 @@ public class Dialog770 extends Thread // parallel dialogs on the same socket
         {
             while (true)
             {
+                System.out.println("before readLine");
                 line = bufferSocketIn.readLine();
-                if (line == null)
-                    break;
-                if (line.equals("end"))
-                    break;
-                myOutput.printOther(line);
+                System.out.println("after readLine");
+                if(line.equals("A")){
+                   bufferSocketOut.write("A");
+                }
+              //  if (line == null)
+              //      break;
+              //  if (line.equals("end"))
+               //     break;
+               // myOutput.printOther(line);
             }
         } catch (IOException e)
         {
@@ -77,8 +82,8 @@ public class Dialog770 extends Thread // parallel dialogs on the same socket
             }
         }
 
-        myOutput.printMe("end of  dialog ");
-        myOutput.send.setText("Close");
+        //myOutput.printMe("end of  dialog ");
+       // myOutput.send.setText("Close");
 
     }
 

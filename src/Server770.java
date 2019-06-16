@@ -5,6 +5,7 @@
 //Levian Yehonatan
 import java.io.*;
 import java.net.*;
+import java.util.List;
 
 class UseServer70
 {
@@ -17,15 +18,19 @@ class UseServer70
 class Server770 extends Thread 	   //the parallel server
 {
 
+   // List<Dialog770> clients;
+
     int DEFAULT_PORT = 770;
     ServerSocket listenSocket;
     Socket clientSockets;
+    ControlFrame gui;
 
     public Server770()   // constructor of a TCP server
     {
         try
         {
             listenSocket = new ServerSocket(DEFAULT_PORT);
+            gui = new ControlFrame();
         } catch (IOException e)    //error
         {
             System.out.println("Problem creating the server-socket");
@@ -44,7 +49,8 @@ class Server770 extends Thread 	   //the parallel server
             while (true)
             {
                 clientSockets = listenSocket.accept();
-                new Dialog770(clientSockets, this);
+                System.out.println("client has connected to server ");
+               gui.addClient(new Dialog770(clientSockets, this));
             }
 
         } catch (IOException e)

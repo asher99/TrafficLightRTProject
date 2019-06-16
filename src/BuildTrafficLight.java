@@ -1,5 +1,6 @@
 
 import javax.swing.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static java.lang.Thread.sleep;
@@ -11,13 +12,19 @@ import static java.lang.Thread.sleep;
 /**
  * @author
  */
-public class BuildTrafficLight {
-	enum Modes {SHABBOS, WEEKDAY}
+public class BuildTrafficLight extends  Thread {
+	enum Modes {SHABBOS, WEEKDAY,CONTROLLED}
 
+	public Event64 tcpQueue;
 
-	public  void startJunction() {
+	public BuildTrafficLight(Event64 q){
+		tcpQueue=q;
+		start();
+	}
+
+	public  void run() {
 		final int numOfLights = 4 + 12 + 1;
-		Client770 myClient = new Client770();
+
 
 		Ramzor ramzorim[] = new Ramzor[numOfLights];
 		ramzorim[0] = new Ramzor(3, 40, 430, 110, 472, 110, 514, 110);
@@ -166,7 +173,9 @@ public class BuildTrafficLight {
 		butt[12].addActionListener(myListener);
 		tlf.myPanel.add(butt[12]);
 		int butEv=0;
+
 		try {
+
 			while (true) {
 
 				switch (currentMode) {
@@ -191,6 +200,12 @@ public class BuildTrafficLight {
 											currentPhase = Phase.PHASE_B;
 										}
 									}
+									else if(tcpQueue.arrivedEvent()){
+										currentPhase = (Phase)tcpQueue.waitEvent();
+										if(currentPhase == Phase.ENTER_SHABBOS){
+											butt[12].setSelected(true);
+										}
+									}
 									else{
 									currentPhase = Phase.PHASE_B;
 									}
@@ -206,6 +221,12 @@ public class BuildTrafficLight {
 										}
 										else{
 											currentPhase = Phase.PHASE_C;
+										}
+									}
+									else if(tcpQueue.arrivedEvent()){
+										currentPhase = (Phase)tcpQueue.waitEvent();
+										if(currentPhase == Phase.ENTER_SHABBOS){
+											butt[12].setSelected(true);
 										}
 									}
 									else {
@@ -224,6 +245,12 @@ public class BuildTrafficLight {
 										else{
 											currentPhase = Phase.PHASE_A; }
 									}
+									else if(tcpQueue.arrivedEvent()){
+										currentPhase = (Phase)tcpQueue.waitEvent();
+										if(currentPhase == Phase.ENTER_SHABBOS){
+											butt[12].setSelected(true);
+										}
+									}
 									else {
 										currentPhase = Phase.PHASE_A;
 									}
@@ -236,6 +263,12 @@ public class BuildTrafficLight {
 						break;
 
 					case SHABBOS:
+						if(tcpQueue.arrivedEvent()) {
+							currentPhase = (Phase) tcpQueue.waitEvent();
+							if (currentPhase == Phase.ENTER_WEEKDAY) {
+								butt[12].setSelected(false);
+							}
+						}
 						if(!butt[12].isSelected()){
 							enterWeekDayMode(phaseList);
 							currentMode = Modes.WEEKDAY;
@@ -373,7 +406,7 @@ public class BuildTrafficLight {
 	}
 
 
-	/*public static void main(String[] args) { //MAIN
+/*	public static void main(String[] args) { //MAIN
 		BuildTrafficLight controller = new BuildTrafficLight();
 		controller.startJunction();
 	}*/
